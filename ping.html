@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Принтери</title>
+    <style>
+        /* Стилі для таблиці можна також вставити тут */
+    </style>
+</head>
+<body>
+    <h1>Статус принтерів</h1>
+    <table border="1" id="pingTable">
+        <!-- Таблиця буде вставлена сюди через JavaScript -->
+    </table>
+
+    <script>
+        // Функція для отримання даних з сервера та вставки їх у таблицю
+        async function fetchAndDisplayTable() {
+            try {
+                const response = await fetch('http://127.0.0.1:3000');
+                const html = await response.text();
+                document.getElementById('pingTable').innerHTML = html;
+            } catch (error) {
+                console.error('Помилка при отриманні даних:', error);
+            }
+        }
+
+        // Викликаємо функцію при завантаженні сторінки
+        window.onload = fetchAndDisplayTable;
+    </script>
+</body>
+</html>

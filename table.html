@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Ping Status</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  .container {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .status-online {
+    color: green;
+  }
+
+  .status-offline {
+    color: red;
+  }
+
+  .tabcontent {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>IP Ping Status</h2>
+
+  <!-- Tab links -->
+  <div class="tab">
+    <button class="tablinks" onclick="openPage(event, 'page1')">Page 1</button>
+    <button class="tablinks" onclick="openPage(event, 'page2')">Page 2</button>
+  </div>
+
+  <!-- Tab content -->
+  <div id="page1" class="tabcontent">
+    <table id="ipStatusTablePage1">
+      <thead>
+        <tr>
+          <th>Hostname</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table body for page 1 -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="page2" class="tabcontent">
+    <table id="ipStatusTablePage2">
+      <thead>
+        <tr>
+          <th>Hostname</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table body for page 2 -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  // List of hostnames to ping
+  const hostnames = [
+"GCube_Sales.blt.printer.ad.autonovad.ua",
+"DT2x_reg_3.blt.printer.ad.autonovad.ua",
+"kyospace.blt.printer.ad.autonovad.ua",
+"canon_mf230.quality.balt.ad.autonovad.ua",
+"balt_dt2_10b.ad.autonovad.ua",
+"balt_vedom.ad.autonovad.ua",
+"balt_dt2_15b.ad.autonovad.ua",
+"balt_dt2_14b.ad.autonovad.ua",
+"balt_dt2_7b.ad.autonovad.ua",
+"balt_dt2_9b.ad.autonovad.ua",
+"balt_dt2_11b.ad.autonovad.ua",
+"balt_dt2_12b.ad.autonovad.ua",
+"Godex DT4x 1 Underbaltika",
+"balt_kyo_logist.ad.autonovad.ua",
+"balt_kyo_packB.ad.autonovad.ua",
+"balt_it.ad.autonovad.ua",
+"balt_tp809_st17.ad.autonovad.ua",
+"balt_kyo_pack_reg.ad.autonovad.ua",
+"balt_G550_1b.ad.autonovad.ua",
+"balt_dt2x_1b.ad.autonovad.ua",
+"balt_dt2_garant.ad.autonovad.ua",
+"balt_dt4_pack2b.ad.autonovad.ua",
+"balt_dt2_1b.ad.autonovad.ua",
+"balt_dt2_2b.ad.autonovad.ua",
+"balt_dt4_of1b.ad.autonovad.ua",
+"balt_dt4_of2b.ad.autonovad.ua",
+"balt_dt2_3b.ad.autonovad.ua",
+"balt_dt2_4b.ad.autonovad.ua",
+"balt_dt2_5b.ad.autonovad.ua",
+"DT2x_samovyviz.blt.printer.ad.autonovad.ua",
+"Priemka_NP.ad.autonovad.ua",
+"balt_dt4_oper.ad.autonovad.ua",
+"overbalt_dt2.ad.autonovad.ua",
+"balt_dt2_oil_1.ad.autonovad.ua",
+"balt_kyo_vozvr.ad.autonovad.ua",
+"balt_dt2x_logimat1.ad.autonovad.ua",
+"balt_sales_mf240.ad.autonovad.ua",
+"balt_dt4_pack1b.ad.autonovad.ua",
+"balt_kyo_fin.ad.autonovad.ua",
+"balt_tp809_extra.ad.autonovad.ua",
+"balt_dt2_samov.ad.autonovad.ua",
+"balt_dt2_13b.ad.autonovad.ua",
+"balt_dt2_furdin.ad.autonovad.ua",
+"balt_check_sales.ad.autonovad.ua",
+"baltic_fin.ad.autonovad.ua",
+"balt_kasa.ad.autonovad.ua",
+"CanonColor_openspace.blt.printer.ad.autonovad.ua",
+"dnepr_dt2.ad.autonovad.ua",
+"dnepr_mf230.ad.autonovad.ua",
+"dnepr_mf230.ad.autonovad.ua",
+"dnepr_tp806.ad.autonovad.ua",
+"dnipro_dt4.ad.autonovad.ua",
+"zhyt_dt2.ad.autonovad.ua",
+"mf230.zhtmr.printer.ad.autonovad.ua",
+"tp809.zhtmr.printer.ad.autonovad.ua",
+"dt2-1.zprzhzh.printer.ad.autonovad.ua",
+"dt4x-1.zprzhzh.printer.ad.autonovad.ua",
+"tp806.zprzhzh.printer.ad.autonovad.ua",
+"m227dfw.zprzhzh.printer.ad.autonovad.ua",
+"mf240.frnkvsk.printer.ad.autonovad.ua",
+"dt2x.frnkvsk.printer.ad.autonovad.ua",
+"dt4x.frnkvsk.printer.ad.autonovad.ua",
+"sam4s.frnkvsk.printer.ad.autonovad.ua",
+"krem_dt2.ad.autonovad.ua",
+"kremen_mf230.ad.autonovad.ua",
+"dt4x-1.krr.printer.ad.autonovad.ua",
+"dt2x-1.krr.printer.ad.autonovad.ua",
+"sam4s-1.krr.printer.ad.autonovad.ua",
+"kyocera-1.krr.printer.ad.autonovad.ua",
+"kropyv_kyo2135.ad.autonovad.ua",
+"kropyv_dt2.ad.autonovad.ua",
+"sam4s1.krp.printer.ad.autonovad.ua",
+"kur_dt2_11.ad.autonovad.ua",
+"kurenivka17.ad.autonovad.ua",
+"kurenivka18.ad.autonovad.ua",
+"kurenivka19.ad.autonovad.ua",
+"kurenivka20.ad.autonovad.ua",
+"kurenivka21.ad.autonovad.ua",
+"kurenivka22.ad.autonovad.ua",
+"kurenivka23.ad.autonovad.ua",
+"kurenivka24.ad.autonovad.ua",
+"kurenivka25.ad.autonovad.ua",
+"kurenivka26.ad.autonovad.ua",
+"kurenivka27.ad.autonovad.ua",
+"kurenivka28.ad.autonovad.ua",
+"kurenivka29.ad.autonovad.ua",
+"kurenivka30.ad.autonovad.ua",
+"kurenivka31.ad.autonovad.ua",
+"kurenivka32.ad.autonovad.ua",
+"kurenivka33.ad.autonovad.ua",
+"kurenivka34.ad.autonovad.ua",
+"kurenivka35.ad.autonovad.ua",
+"kur_dt4_sklad.ad.autonovad.ua",
+"kurenivka-kyocera.ad.autonovad.ua",
+"lviv_canon.ad.autonovad.ua",
+"lviv_dt4.ad.autonovad.ua",
+"lviv_mf110.ad.autonovad.ua",
+"lviv_dt2_1.ad.autonovad.ua",
+"lviv_dt2_2.ad.autonovad.ua",
+"lv_tp809.ad.autonovad.ua",
+"od-Mf-230.ad.autonovad.ua",
+"od-dt2.ad.autonovad.ua",
+"od-TP809.ad.autonovad.ua",
+"od-DT4.ad.autonovad.ua",
+"kyoceraand2floor.ad.autonovad.ua",
+"can-6230dw-1.pf.printer.ad.autonovad.ua",
+"pov_canon_3010.ad.autonovad.ua",
+"kyo-2135dn.pf.printer.ad.autonovad.ua",
+"polt_dt2.ad.autonovad.ua",
+"Dt2x.plt.printer.ad.autonovad.ua",
+"DT2x_2.plt.printer.ad.autonovad.ua",
+"DT4x_1.plt.printer.ad.autonovad.ua",
+"polt_tp809.ad.autonovad.ua",
+"sam4s.plt.printer.ad.autonovad.ua",
+"polt_mf230.ad.autonovad.ua",
+"MF264.plt.printer.ad.autonovad.ua",
+"skl_dt2_7.ad.autonovad.ua",
+"MF240.sklrnk.printer.ad.autonovad.ua",
+"sklyar_hr.ad.autonovad.ua",
+"skl_dt2_pz.ad.autonovad.ua",
+"skl_kyo_4200.ad.autonovad.ua",
+"skl_kyo_buh.ad.autonovad.ua",
+"skl_hp_hr.ad.autonovad.ua",
+"skl_kyo3145.ad.autonovad.ua",
+"skl_dt4_2.ad.autonovad.ua",
+"DT2x_2.centr.printer.ad.autonovad.ua",
+"dt2.trnpl.printer.ad.autonovad.ua",
+"dt2-2.trnpl.printer.ad.autonovad.ua",
+"sam4s.trnpl.printer.ad.autonovad.ua",
+"dt4.trnpl.printer.ad.autonovad.ua",
+"mf260.trnpl.printer.ad.autonovad.ua",
+"Sam4s.tern.printer.ad.autonovad.ua",
+"uzh_tp809.ad.autonovad.ua",
+"uzh_dt4.ad.autonovad.ua",
+"uzhg_dt2.ad.autonovad.ua",
+"khar_dt2.ad.autonovad.ua",
+"khar_mf230.ad.autonovad.ua",
+"khar_tp806.ad.autonovad.ua",
+"khar_dt4.ad.autonovad.ua",
+"DT2.cherk.printer.ad.autonovad.ua",
+"DT4x.cherk.printer.ad.autonovad.ua",
+"sam4s.cherk.printer.ad.autonovad.ua",
+"HP135w.cherk.printer.ad.autonovad.ua",
+"chernivci_dt2.ad.autonovad.ua",
+"chern_tp809.ad.autonovad.ua",
+"chern_mf230.ad.autonovad.ua",
+"chernivci_dt4.ad.autonovad.ua",
+"TEST",
+"underb_dt2_2.ad.autonovad.ua",
+"underb_dt2_1.ad.autonovad.ua",
+"polt_dt4.ad.autonovad.ua",
+"DT4X-2.lviv.printer.ad.autonovad.ua",
+"DT2x-3.lviv.printer.ad.autonovad.ua",
+"Sam4s.lviv.printer.ad.autonovad.ua",
+  ];
+
+  // Function to ping hostname
+  async function pingHostname(hostname) {
+    try {
+      const response = await fetch(`https://api.ipify.org?format=json&${hostname}`);
+      return response.ok;
+    } catch (error) {
+      console.error("Error pinging hostname:", error);
+      return false;
+    }
+  }
+
+  // Function to update table with ping status for a specific hostname
+  async function updateStatusForHostname(hostname, tableId) {
+    const status = await pingHostname(hostname);
+    const statusCell = document.querySelector(`#${tableId} [data-hostname="${hostname}"] .status`);
+    if (statusCell) {
+      statusCell.innerHTML = status ? "Online" : "Offline";
+      statusCell.className = status ? "status-online" : "status-offline";
+    }
+  }
+
+  // Function to update table with ping status for all hostnames on a specific page
+  async function updateTable(pageNumber, tableId) {
+    const hostnamesOnPage = hostnames.slice((pageNumber - 1) * 30, pageNumber * 30);
+    for (const hostname of hostnamesOnPage) {
+      await updateStatusForHostname(hostname, tableId);
+    }
+  }
+
+  // Open the default tab
+  document.querySelector('.tablinks').click();
+
+  // Open a specific page
+  function openPage(evt, pageName) {
+    const tabcontent = document.querySelectorAll('.tabcontent');
+    tabcontent.forEach(tab => {
+      tab.style.display = 'none';
+    });
+
+    const tablinks = document.querySelectorAll('.tablinks');
+    tablinks.forEach(tablink => {
+      tablink.className = tablink.className.replace(' active', '');
+    });
+
+    document.getElementById(pageName).style.display = 'block';
+    evt.currentTarget.className += ' active';
+
+    const pageNumber = pageName === 'page1' ? 1 : 2;
+    const tableId = pageName === 'page1' ? 'ipStatusTablePage1' : 'ipStatusTablePage2';
+    updateTable(pageNumber, tableId);
+  }
+</script>
+
+</body>
+</html>

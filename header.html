@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мій сайт</title>
+<style>
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background-color: #000;
+    color: #0f0;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  nav {
+    margin-top: 10px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  nav ul li a {
+    color: #0f0;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+
+  nav ul li a:hover {
+    color: #fff;
+  }
+</style>
+</head>
+<body>  
+
+<header>
+  <div class="container">
+    <div class="logo">Мій сайт</div>
+    <nav id="menu">
+      <ul>
+        <!-- Елементи навігації будуть додані за допомогою JavaScript -->
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const menuItems = [
+    { text: "Головна", url: "#" },
+    { text: "Про нас", url: "#" },
+    { text: "Послуги", url: "#" },
+    { text: "Контакти", url: "#" }
+  ];
+
+  const navUl = document.querySelector("nav ul");
+
+  menuItems.forEach(item => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = item.url;
+    a.textContent = item.text;
+    li.appendChild(a);
+    navUl.appendChild(li);
+  });
+});
+</script>
+
+<!-- Додайте інший вміст вашого сайту нижче -->
+
+</body>
+</html>

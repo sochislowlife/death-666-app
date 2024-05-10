@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій веб-сайт</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            color: #0f0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .matrix-text {
+            font-size: 24px;
+            white-space: nowrap;
+            animation: animate 5s linear infinite;
+        }
+
+        @keyframes animate {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="matrix-text">
+            <!-- Тут буде ваш контент -->
+            Ласкаво просимо на мій веб-сайт
+        </div>
+    </div>
+</body>
+</html>
