@@ -1,0 +1,9 @@
+{
+    "cloudcode.kubeconfigs": [
+        {
+            "name": "\\sochislowlife\\death-666-app\\.vscode\\extensions.json",
+            "configPath": "\\sochislowlife\\death-666-app\\.vscode\\extensions.json"
+        }
+    ],
+    "cloudcode.active-kubeconfig": "\\sochislowlife\\death-666-app\\.vscode\\extensions.json"
+}
